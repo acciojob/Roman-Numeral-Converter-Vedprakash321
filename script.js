@@ -10,31 +10,31 @@ function convertToRoman(num) {
     };
 
   //your code here
-let result = '';
+	
+  if (typeof num !== "number" || num < 0 || num > 100000) {
+    return;
+  }
 
-     for (let i = 0; i <= 6; i += 2) {
-        const [symbol1, value1] = obj[i];
-        const [symbol2, value2] = obj[i - 1];
+  let romanNumeral = "";
 
-        const digit = Math.floor(num / value1);
-        num %= value1;
-
-        if (digit === 9) {
-            result += symbol2 + symbol1;
-        } else if (digit >= 5) {
-            result += symbol1;
-            for (let j = 0; j < digit - 5; j++) {
-                result += symbol2;
-            }
-        } else if (digit === 4) {
-            result += symbol2 + symbol1;
-        } else {
-            for (let j = 0; j < digit; j++) {
-                result += symbol1;
-            }
-        }
+  for (let i = 0; i < 7; i++) {
+    while (num >= obj[i][1]) {
+      romanNumeral += obj[i][0];
+      num -= obj[i][1];
     }
 
-    return result;
+    // Check for subtractive notation (e.g., IV for 4 or IX for 9)
+    if (i % 2 === 0 && i < 6) {
+      const nextValue = obj[i + 2][1];
+      if (num >= obj[i][1] - nextValue) {
+        romanNumeral += obj[i + 2][0] + obj[i][0];
+        num -= obj[i][1] - nextValue;
+      }
+    }
+  }
+
+  return romanNumeral;
+
 }
+
 module.exports = convertToRoman
