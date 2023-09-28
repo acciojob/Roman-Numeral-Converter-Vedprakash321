@@ -12,24 +12,30 @@ function convertToRoman(num) {
   //your code here
 	
   if (typeof num !== "number" || num < 0 || num > 100000) {
-    return "Invalid input";
+    return ;
   }
 
   let romanNumeral = "";
 
   for (let i = 0; i < 7; i++) {
+	  
     while (num >= obj[i][1]) {
+		
       romanNumeral += obj[i][0];
+		
       num -= obj[i][1];
+		
     }
 
     // Check for subtractive notation (e.g., IV for 4 or IX for 9)
-    if (i % 2 === 0 && i < 6) {
+    if (i % 2 == 0 && i < 6) {
+		
       const nextValue = obj[i + 2][1];
       if (num >= obj[i][1] - nextValue) {
         romanNumeral += obj[i + 2][0] + obj[i][0];
         num -= obj[i][1] - nextValue;
       }
+		
     }
   }
 
